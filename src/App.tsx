@@ -45,6 +45,10 @@ function App() {
     setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
+  const clearToasts = () => {
+    setToasts([]);
+  };
+
   const handleParse = () => {
     const parsedUsers = parseTwitterRetweetText(inputText);
     if (parsedUsers.length === 0) {
@@ -157,6 +161,9 @@ function App() {
       return;
     }
 
+    // 토스트 모두 닫기
+    clearToasts();
+
     // 드럼롤 시작!
     soundGenerator.playDrumRoll();
 
@@ -230,6 +237,15 @@ function App() {
     setShowInput(true);
   };
 
+  const handleRedraw = () => {
+    // 현재 참가자와 설정을 유지한 채로 다시 추첨
+    setDrawState({ status: 'floating', winners: [], speed: 1 });
+    // 약간의 딜레이 후 추첨 시작
+    setTimeout(() => {
+      handleStartDraw();
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-base-200">
       {/* Toast notifications */}
@@ -250,6 +266,7 @@ function App() {
         <WinnerDisplay
           winners={drawState.winners}
           onReset={handleReset}
+          onRedraw={handleRedraw}
           eventName={eventName}
           totalParticipants={users.length}
           showRanking={showRanking}

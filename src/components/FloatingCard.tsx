@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { User } from '../types';
-import Button from './Button';
 import { soundGenerator } from '../utils/sounds';
 
 interface FloatingCardProps {
@@ -15,7 +14,7 @@ function FloatingCard({ user, speed, isWinner, drawingState }: FloatingCardProps
   const [position, setPosition] = useState({ x: user.x, y: user.y });
   const velocityRef = useRef({ vx: user.vx, vy: user.vy });
   const [rotation, setRotation] = useState(user.rotation);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
 
   // 호버 및 확대 상태
   const [isHovered, setIsHovered] = useState(false);

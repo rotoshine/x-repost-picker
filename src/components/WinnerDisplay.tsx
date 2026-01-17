@@ -7,6 +7,7 @@ import { soundGenerator } from '../utils/sounds';
 interface WinnerDisplayProps {
   winners: User[];
   onReset: () => void;
+  onRedraw: () => void;
   eventName?: string;
   totalParticipants: number;
   showRanking?: boolean;
@@ -38,7 +39,7 @@ function splitPostContent(header: string, usernames: string[], maxLength: number
   return posts;
 }
 
-function WinnerDisplay({ winners, onReset, eventName, totalParticipants, showRanking = false, onShowToast }: WinnerDisplayProps) {
+function WinnerDisplay({ winners, onReset, onRedraw, eventName, totalParticipants, showRanking = false, onShowToast }: WinnerDisplayProps) {
   const [showFlash, setShowFlash] = useState(true);
   const [showPostModal, setShowPostModal] = useState(false);
 
@@ -176,6 +177,16 @@ function WinnerDisplay({ winners, onReset, eventName, totalParticipants, showRan
               }}
             >
               📢 당첨결과 포스트하기
+            </Button>
+            <Button
+              variant="warning"
+              size="lg"
+              onClick={() => {
+                soundGenerator.playClick();
+                onRedraw();
+              }}
+            >
+              🎲 재추첨하기
             </Button>
             <Button
               variant="primary"

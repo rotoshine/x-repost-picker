@@ -1,0 +1,658 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* Input panel slide animation */
+.input-panel {
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: top;
+}
+
+.input-panel-open {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+}
+
+.input-panel-closed {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-30px) scaleY(0.8);
+  transition: all 0.3s ease-out;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.slide-down {
+  animation: slide-down 0.4s ease-out forwards;
+}
+
+.slide-up {
+  animation: slide-up 0.3s ease-in forwards;
+}
+
+/* Winner card effect */
+@keyframes winner-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px 5px rgba(250, 204, 21, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 30px 10px rgba(250, 204, 21, 0.8);
+  }
+}
+
+.winner-card {
+  animation: winner-glow 1s ease-in-out infinite;
+  position: relative;
+  z-index: 100 !important;
+}
+
+/* Winner reveal animation */
+@keyframes winner-reveal {
+  0% {
+    transform: scale(0.5) rotate(-180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.3) rotate(10deg);
+  }
+  80% {
+    transform: scale(0.9) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.winner-reveal {
+  animation: winner-reveal 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Gacha-style screen transition */
+@keyframes gacha-flash {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,215,0,0.8) 50%, rgba(255,255,255,0) 100%);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes gacha-zoom {
+  0% {
+    transform: scale(5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Toast slide-in animation */
+@keyframes toast-slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.toast > * {
+  animation: toast-slide-in 0.3s ease-out forwards;
+}
+
+/* Dark mode adjustments */
+[data-theme="night"] .header-gradient {
+  background: linear-gradient(to right, rgb(88, 28, 135), rgb(30, 64, 175)) !important;
+}
+
+[data-theme="light"] .header-gradient {
+  background: linear-gradient(to right, rgb(168, 85, 247), rgb(59, 130, 246)) !important;
+}
+
+[data-theme="night"] .help-card-bg {
+  background: linear-gradient(to bottom right, rgb(30, 41, 59), rgb(51, 65, 85)) !important;
+}
+
+[data-theme="light"] .help-card-bg {
+  background: linear-gradient(to bottom right, rgb(219, 234, 254), rgb(243, 232, 255)) !important;
+}
+
+/* Winner card adjustments for dark mode */
+[data-theme="night"] .winner-card::before {
+  opacity: 0.4;
+}
+
+[data-theme="light"] .winner-card::before {
+  opacity: 0.6;
+}
+
+/* Golden overlay brightness adjustment */
+[data-theme="night"] .golden-overlay {
+  opacity: 0.2;
+}
+
+[data-theme="light"] .golden-overlay {
+  opacity: 0.4;
+}
+
+/* Toggle button border adjustment */
+[data-theme="night"] .toggle-button-border {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="light"] .toggle-button-border {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Input/Textarea dark mode styling */
+[data-theme="night"] .textarea,
+[data-theme="night"] .input {
+  background-color: rgb(30, 41, 59);
+  border-color: rgb(51, 65, 85);
+  color: rgb(226, 232, 240);
+}
+
+[data-theme="night"] .textarea::placeholder,
+[data-theme="night"] .input::placeholder {
+  color: rgb(148, 163, 184);
+}
+
+[data-theme="night"] .textarea:focus,
+[data-theme="night"] .input:focus {
+  border-color: rgb(99, 102, 241);
+  outline-color: rgb(99, 102, 241);
+}
+
+/* Light mode - keep defaults but ensure consistency */
+[data-theme="light"] .textarea,
+[data-theme="light"] .input {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(209, 213, 219);
+  color: rgb(31, 41, 55);
+}
+
+[data-theme="light"] .textarea::placeholder,
+[data-theme="light"] .input::placeholder {
+  color: rgb(156, 163, 175);
+}
+
+[data-theme="light"] .textarea:focus,
+[data-theme="light"] .input:focus {
+  border-color: rgb(139, 92, 246);
+  outline-color: rgb(139, 92, 246);
+}
+
+/* Card backgrounds for better contrast */
+[data-theme="night"] .card.bg-base-100\/95 {
+  background-color: rgba(30, 41, 59, 0.95) !important;
+}
+
+[data-theme="light"] .card.bg-base-100\/95 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Control section background */
+[data-theme="night"] .bg-base-100\/90 {
+  background-color: rgba(30, 41, 59, 0.95) !important;
+}
+
+[data-theme="light"] .bg-base-100\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Control section text colors */
+[data-theme="night"] .bg-base-100\/90 label,
+[data-theme="night"] .bg-base-100\/90 span {
+  color: rgb(226, 232, 240) !important;
+}
+
+[data-theme="light"] .bg-base-100\/90 label,
+[data-theme="light"] .bg-base-100\/90 span {
+  color: rgb(31, 41, 55) !important;
+}
+
+/* Participant list item background */
+[data-theme="night"] .bg-base-200 {
+  background-color: rgb(51, 65, 85);
+}
+
+/* Badge styling for dark mode */
+[data-theme="night"] .badge-warning {
+  background-color: rgb(234, 179, 8);
+  color: rgb(30, 41, 55);
+}
+
+/* Modal background */
+[data-theme="night"] .modal-box {
+  background-color: rgb(30, 41, 59);
+}
+
+[data-theme="night"] .mockup-code {
+  background-color: rgb(15, 23, 42);
+}
+
+/* ===== BUTTON STYLES ===== */
+
+/* Dark mode button styles */
+[data-theme="night"] .btn {
+  color: rgb(226, 232, 240);
+}
+
+[data-theme="night"] .btn-ghost {
+  color: rgb(226, 232, 240);
+  background-color: transparent;
+}
+
+[data-theme="night"] .btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+[data-theme="night"] .btn-primary {
+  background-color: rgb(124, 58, 237) !important;
+  border-color: rgb(124, 58, 237) !important;
+  color: white !important;
+}
+
+[data-theme="night"] .btn-primary:hover {
+  background-color: rgb(139, 92, 246) !important;
+  border-color: rgb(139, 92, 246) !important;
+  color: white !important;
+}
+
+[data-theme="night"] .btn-primary:disabled {
+  background-color: rgb(71, 85, 105) !important;
+  border-color: rgb(71, 85, 105) !important;
+  color: rgb(148, 163, 184) !important;
+  opacity: 0.7;
+}
+
+/* Light mode button styles */
+[data-theme="light"] .btn-ghost {
+  color: rgb(55, 65, 81);
+  background-color: transparent;
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgb(31, 41, 55);
+}
+
+[data-theme="light"] .btn-primary {
+  background-color: rgb(124, 58, 237) !important;
+  border-color: rgb(124, 58, 237) !important;
+  color: white !important;
+}
+
+[data-theme="light"] .btn-primary:hover {
+  background-color: rgb(109, 40, 217) !important;
+  border-color: rgb(109, 40, 217) !important;
+  color: white !important;
+}
+
+[data-theme="light"] .btn-primary:disabled {
+  background-color: rgb(209, 213, 219) !important;
+  border-color: rgb(209, 213, 219) !important;
+  color: rgb(107, 114, 128) !important;
+  opacity: 0.7;
+}
+
+/* Label text color */
+[data-theme="night"] .label-text {
+  color: rgb(203, 213, 225);
+}
+
+/* Main floating area - darker than cards */
+[data-theme="night"] .bg-base-100 {
+  background-color: rgb(17, 24, 39);
+}
+
+[data-theme="light"] .bg-base-100 {
+  background-color: rgb(241, 245, 249);
+}
+
+/* Empty state text */
+[data-theme="night"] .opacity-50 {
+  color: rgb(148, 163, 184);
+}
+
+/* Divider styling */
+[data-theme="night"] .divider::before,
+[data-theme="night"] .divider::after {
+  background-color: rgb(71, 85, 105);
+}
+
+/* Alert info styling */
+[data-theme="night"] .alert-info {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: rgb(191, 219, 254);
+}
+
+/* Floating card text colors for dark mode */
+[data-theme="night"] .card .text-xs:not(.text-yellow-600):not(.text-yellow-500) {
+  color: rgb(226, 232, 240);
+}
+
+[data-theme="night"] .card .opacity-60 {
+  color: rgb(148, 163, 184);
+  opacity: 1;
+}
+
+/* Winner display dark mode adjustments */
+[data-theme="night"] .text-yellow-600 {
+  color: rgb(250, 204, 21) !important;
+}
+
+[data-theme="night"] .text-yellow-500 {
+  color: rgb(234, 179, 8) !important;
+}
+
+/* Main content area background */
+[data-theme="night"] .bg-base-200 {
+  background-color: rgb(23, 23, 33);
+}
+
+[data-theme="light"] .bg-base-200 {
+  background-color: rgb(241, 245, 249);
+}
+
+/* Card shadow adjustment for dark mode */
+[data-theme="night"] .card {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* Winner card in dark mode */
+[data-theme="night"] .card.border-yellow-400 {
+  background-color: rgb(30, 41, 59);
+}
+
+/* Winner display gradient text */
+[data-theme="night"] .from-yellow-600.to-yellow-800 {
+  background-image: linear-gradient(to right, rgb(250, 204, 21), rgb(234, 179, 8)) !important;
+}
+
+/* Badge colors for dark mode */
+[data-theme="night"] .badge-primary {
+  background-color: rgb(99, 102, 241);
+  color: white;
+}
+
+/* kbd (keyboard key) styling */
+[data-theme="night"] .kbd {
+  background-color: rgb(51, 65, 85);
+  border-color: rgb(71, 85, 105);
+  color: rgb(226, 232, 240);
+}
+
+/* Modal backdrop */
+[data-theme="night"] .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Card body text colors */
+[data-theme="night"] .card-body p,
+[data-theme="night"] .card-body span {
+  color: rgb(203, 213, 225);
+}
+
+[data-theme="night"] .card-title {
+  color: rgb(241, 245, 249);
+}
+
+/* Override for winner titles */
+[data-theme="night"] .card-title.bg-clip-text {
+  color: transparent;
+}
+
+/* Empty state text enhancement */
+[data-theme="night"] .flex.items-center.justify-center p {
+  color: rgb(148, 163, 184);
+}
+
+/* Step indicators in help modal */
+[data-theme="night"] .bg-primary {
+  background-color: rgb(99, 102, 241);
+}
+
+/* List ordered text */
+[data-theme="night"] .list-decimal {
+  color: rgb(203, 213, 225);
+}
+
+/* Scrollbar styling for dark mode */
+[data-theme="night"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="night"] ::-webkit-scrollbar-track {
+  background: rgb(30, 41, 59);
+}
+
+[data-theme="night"] ::-webkit-scrollbar-thumb {
+  background: rgb(71, 85, 105);
+  border-radius: 4px;
+}
+
+[data-theme="night"] ::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 116, 139);
+}
+
+/* Tab styling for dark mode */
+[data-theme="night"] .tabs-boxed {
+  background-color: rgb(30, 41, 59);
+}
+
+[data-theme="night"] .tab {
+  color: rgb(148, 163, 184);
+}
+
+[data-theme="night"] .tab-active {
+  background-color: rgb(99, 102, 241) !important;
+  color: white !important;
+}
+
+[data-theme="night"] .tab:hover:not(.tab-active) {
+  color: rgb(226, 232, 240);
+}
+
+/* Light mode tabs */
+[data-theme="light"] .tabs-boxed {
+  background-color: rgb(229, 231, 235);
+}
+
+[data-theme="light"] .tab-active {
+  background-color: rgb(124, 58, 237) !important;
+  color: white !important;
+}
+
+/* Floating card background - distinct from main area */
+[data-theme="night"] .floating-card-bg {
+  background-color: rgb(51, 65, 85);
+}
+
+[data-theme="light"] .floating-card-bg {
+  background-color: rgb(255, 255, 255);
+}
+
+/* Floating card text colors */
+[data-theme="night"] .floating-card-bg .text-xs {
+  color: rgb(226, 232, 240);
+}
+
+[data-theme="night"] .floating-card-bg .opacity-60 {
+  color: rgb(148, 163, 184);
+  opacity: 1;
+}
+
+[data-theme="light"] .floating-card-bg .text-xs {
+  color: rgb(31, 41, 55);
+}
+
+[data-theme="light"] .floating-card-bg .opacity-60 {
+  color: rgb(107, 114, 128);
+  opacity: 1;
+}
+
+/* Floating card border color */
+[data-theme="night"] .border-base-300 {
+  border-color: rgb(71, 85, 105);
+}
+
+[data-theme="light"] .border-base-300 {
+  border-color: rgb(209, 213, 219);
+}
+
+/* Center draw button area text */
+[data-theme="night"] .opacity-70 {
+  color: rgb(203, 213, 225);
+}
+
+[data-theme="light"] .opacity-70 {
+  color: rgb(75, 85, 99);
+}
+
+/* Center draw button box */
+[data-theme="night"] .bg-base-100\/80 {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+}
+
+[data-theme="light"] .bg-base-100\/80 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Text in center draw box */
+[data-theme="night"] .font-medium {
+  color: rgb(226, 232, 240);
+}
+
+[data-theme="light"] .font-medium {
+  color: rgb(31, 41, 55);
+}
+
+/* Header slide up animation for drawing state */
+.header-container {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out;
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Full screen card area during drawing */
+.card-area {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-area-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 30;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+/* Winner stack container */
+.winner-stack-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+/* Hide scrollbar but keep functionality */
+.winner-stack-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Winner stack card animation - appears from center with dramatic entrance */
+@keyframes winner-stack-appear {
+  0% {
+    opacity: 0;
+    transform: scale(2) translateY(-50px);
+    filter: brightness(2);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2) translateY(0);
+    filter: brightness(1.5);
+  }
+  70% {
+    transform: scale(0.95) translateY(5px);
+    filter: brightness(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+.winner-stack-card {
+  animation: winner-stack-appear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}

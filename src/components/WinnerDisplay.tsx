@@ -3,6 +3,7 @@ import { User } from '../types';
 import Confetti from './Confetti';
 import Button from './Button';
 import { soundGenerator } from '../utils/sounds';
+import { analytics } from '../utils/analytics';
 
 interface WinnerDisplayProps {
   winners: User[];
@@ -69,6 +70,7 @@ function WinnerDisplay({ winners, onReset, onRedraw, eventName, totalParticipant
       await navigator.clipboard.writeText(text);
       soundGenerator.playClick();
       onShowToast(`포스트 ${index + 1} 복사 완료!`, 'success');
+      analytics.copyResult();
     } catch {
       onShowToast('복사에 실패했습니다.', 'error');
     }

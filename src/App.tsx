@@ -9,6 +9,7 @@ import Button from './components/Button';
 import { soundGenerator } from './utils/sounds';
 import { saveDrawResult } from './utils/history';
 import { useTheme } from './hooks/useTheme';
+import { analytics } from './utils/analytics';
 
 interface ToastMessage {
   id: number;
@@ -76,6 +77,7 @@ function App() {
     setInputText('');
     soundGenerator.playClick();
     showToast(`${newUsers.length}명의 참가자가 추가되었습니다!`, 'success');
+    analytics.addParticipants(newUsers.length);
 
     // 2명 이상 등록 시 입력 패널 자동 접기
     if (allUsers.length >= 2) {
@@ -121,6 +123,7 @@ function App() {
     setManualUsername('');
     soundGenerator.playClick();
     showToast(`@${username} 추가되었습니다!`, 'success');
+    analytics.addManualParticipant();
 
     if (drawState.status === 'idle') {
       setDrawState({ status: 'floating', winners: [], speed: 1 });
@@ -130,6 +133,7 @@ function App() {
   const handleRemoveUser = (username: string) => {
     setUsers(users.filter(u => u.username !== username));
     showToast(`@${username} 제거되었습니다.`, 'info');
+    analytics.removeParticipant();
   };
 
   // Re-initialize positions when container is ready
@@ -179,6 +183,7 @@ function App() {
 
     setDrawState({ status: 'drawing', winners: [], speed: 1 });
     setShowInput(false);
+    analytics.startDraw(users.length, numWinners);
 
     // Accelerate for 4 seconds for more drama
     let elapsedTime = 0;
@@ -224,6 +229,7 @@ function App() {
           // 히스토리에 저장
           saveDrawResult(eventName, winners, users, showRanking);
           setDrawState(prev => ({ ...prev, status: 'finished' }));
+          analytics.finishDraw(winners.length);
         }, 2000);
       }
     }, 1000); // Slower reveal for more drama
@@ -235,11 +241,13 @@ function App() {
     setDrawState({ status: 'idle', winners: [], speed: 1 });
     setInputText('');
     setShowInput(true);
+    analytics.reset();
   };
 
   const handleRedraw = () => {
     // 현재 참가자와 설정을 유지한 채로 다시 추첨
     setDrawState({ status: 'floating', winners: [], speed: 1 });
+    analytics.redraw();
     // 약간의 딜레이 후 추첨 시작
     setTimeout(() => {
       handleStartDraw();
@@ -301,6 +309,7 @@ function App() {
                     onClick={() => {
                       soundGenerator.playClick();
                       setShowHistory(true);
+                      analytics.openHistory();
                     }}
                     title="추첨 히스토리"
                   >
@@ -313,7 +322,9 @@ function App() {
                     className="btn btn-ghost btn-circle text-white hover:bg-white/20"
                     onClick={() => {
                       soundGenerator.playClick();
+                      const newTheme = theme === 'light' ? 'night' : 'light';
                       toggleTheme();
+                      analytics.toggleTheme(newTheme);
                     }}
                     title={theme === 'light' ? '다크 모드' : '라이트 모드'}
                   >
@@ -342,7 +353,10 @@ function App() {
                         <h3 className="card-title text-sm text-base-content">일괄 입력 (X 복사 붙여넣기)</h3>
                         <button
                           className="btn btn-circle btn-ghost btn-xs"
-                          onClick={() => setShowHelp(true)}
+                          onClick={() => {
+                            setShowHelp(true);
+                            analytics.openHelp();
+                          }}
                           title="사용 방법 보기"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-5 h-5 stroke-current">

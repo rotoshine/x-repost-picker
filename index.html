@@ -20,6 +20,15 @@
     <meta name="twitter:description" content="X 리포스트 한 사람 추첨하려고 만들었어요." />
     <meta name="twitter:image" content="https://x-repost-picker.roto.codes/og-image.png" />
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_MEASUREMENT_ID%"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '%VITE_GA_MEASUREMENT_ID%');
+    </script>
+
     <script>
       // Prevent theme flash on page load
       (function() {
